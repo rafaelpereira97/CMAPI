@@ -23,3 +23,4 @@ Route::get('getEntities',[\App\Http\Controllers\API\ApiController::class,'getEnt
 Route::get('getProductsByEntity/{entity}',[\App\Http\Controllers\API\ApiController::class,'getProductsByEntity'])->name('getProductsByEntity');
 Route::get('getProductsByEntityAndSubcategory/{entity}/{subcategory}',[\App\Http\Controllers\API\ApiController::class,'getProductsByEntityAndSubcategory'])->name('getProductsByEntityAndSubcategory');
 Route::get('getSubcategories',[\App\Http\Controllers\API\ApiController::class,'getSubcategories'])->name('getSubcategories');
+Route::get('getProductsBySubcategory/{subcategory}',[\App\Http\Controllers\API\ApiController::class,'getProductsBySubcategory'])->name('getProductsBySubcategory');
