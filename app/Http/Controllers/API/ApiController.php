@@ -30,6 +30,7 @@ class ApiController extends Controller
         return response()->json($products,200);
     }
 
+
     public function getProductsByEntityAndSubcategory($entity,$subcategory){
         $products = Product::with('entity','subcategory')
             ->where('entity_id',$entity)
