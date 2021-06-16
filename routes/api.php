@@ -19,3 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('getProducts',[\App\Http\Controllers\API\ApiController::class,'getProducts'])->name('getProducts');
+Route::get('getEntities',[\App\Http\Controllers\API\ApiController::class,'getEntities'])->name('getEntities');
+Route::get('getProductsByEntity/{entity}',[\App\Http\Controllers\API\ApiController::class,'getProductsByEntity'])->name('getProductsByEntity');
+Route::get('getProductsByEntityAndSubcategory/{entity}/{subcategory}',[\App\Http\Controllers\API\ApiController::class,'getProductsByEntityAndSubcategory'])->name('getProductsByEntityAndSubcategory');
+Route::get('getSubcategories',[\App\Http\Controllers\API\ApiController::class,'getSubcategories'])->name('getSubcategories');
