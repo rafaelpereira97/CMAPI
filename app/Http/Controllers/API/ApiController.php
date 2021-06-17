@@ -9,6 +9,8 @@ use App\Product;
 use App\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -18,10 +20,12 @@ class ApiController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return response()->json('success',200);
+            $user = User::where('email',$request->email)->first();
+
+            return response()->json(['id' => $user->id, 'name' => $user->name, 'email' => $user->email, '_token' => Hash::make(Str::random())],200);
         }
 
-        return response()->json('login failed',401);
+        return response()->json('login failed',403);
     }
 
     public function getRecommendedProducts(){
