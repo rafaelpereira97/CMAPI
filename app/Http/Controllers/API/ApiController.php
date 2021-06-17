@@ -70,6 +70,9 @@ class ApiController extends Controller
 
     public function getEntities(){
         $entities = Entity::all();
+        $entities->map(function($entity){
+            $entity['image'] = url('/').'/storage/'.$entity['image'];
+        });
         return response()->json($entities);
     }
 
