@@ -87,7 +87,7 @@ class ApiController extends Controller
             foreach (json_decode($product['images']) as $key => $image) {
                 $links[] = (new \TCG\Voyager\Voyager)->image($image);
             }
-            $product['images'] = $links;
+            $product['images'] = json_encode($links);
         });
 
         return $products;
