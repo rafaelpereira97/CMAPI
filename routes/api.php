@@ -18,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('login',[\App\Http\Controllers\API\ApiController::class, 'login'])->name('login');
+Route::get('getRecommendedProducts',[\App\Http\Controllers\API\ApiController::class,'getRecommendedProducts'])->name('getRecommendedProducts');
+Route::get('getProductsByNameAndSubcategory/{searchString}',[\App\Http\Controllers\API\ApiController::class,'getProductsByNameAndSubcategory'])->name('getProductsByNameAndSubcategory');
+
+
 Route::get('getProducts',[\App\Http\Controllers\API\ApiController::class,'getProducts'])->name('getProducts');
 Route::get('getEntities',[\App\Http\Controllers\API\ApiController::class,'getEntities'])->name('getEntities');
 Route::get('getProductsByEntity/{entity}',[\App\Http\Controllers\API\ApiController::class,'getProductsByEntity'])->name('getProductsByEntity');
