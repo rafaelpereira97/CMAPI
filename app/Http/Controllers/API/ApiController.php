@@ -26,7 +26,7 @@ class ApiController extends Controller
 
     public function getRecommendedProducts(){
         $products = Product::with('entity','subcategory')->inRandomOrder()->limit(10)->get();
-        return response()->json($products,200);
+        return response()->json($this->mapProducts($products),200);
     }
 
     public function getProductsByNameAndSubcategory($searchString){
@@ -35,36 +35,28 @@ class ApiController extends Controller
         }])
             ->where('name', 'like', '%'.$searchString.'%')->get();
 
-        return response()->json($products,200);
+        return response()->json($this->mapProducts($products),200);
     }
 
     public function getProducts(){
         $products = Product::with('entity','subcategory')->get();
-        $products->map(function ($product){
-            $product['image'] = url('/').'/storage/'.$product['image'];
-            $links = array();
-            foreach (json_decode($product['images']) as $key => $image) {
-                $links[] = (new \TCG\Voyager\Voyager)->image($image);
-            }
-            $product['images'] = $links;
-        });
 
 
-        return response()->json($products,200);
+        return response()->json($this->mapProducts($products),200);
     }
 
     public function getProductsByEntity($entity){
         $products = Product::with('entity','subcategory')
             ->where('entity_id',$entity)
             ->get();
-        return response()->json($products,200);
+        return response()->json($this->mapProducts($products),200);
     }
 
     public function getProductsBySubcategory($subcategory){
         $products = Product::with('entity','subcategory')
             ->where('subcategory_id',$subcategory)
             ->get();
-        return response()->json($products,200);
+        return response()->json($this->mapProducts($products),200);
     }
 
 
@@ -73,7 +65,7 @@ class ApiController extends Controller
             ->where('entity_id',$entity)
             ->where('subcategory_id',$subcategory)
             ->get();
-        return response()->json($products,200);
+        return response()->json($this->mapProducts($products),200);
     }
 
     public function getEntities(){
@@ -84,6 +76,21 @@ class ApiController extends Controller
     public function getSubcategories(){
         $subcategories = Subcategory::all();
         return response()->json($subcategories);
+    }
+
+
+
+    public function mapProducts($products){
+        $products->map(function ($product){
+            $product['image'] = url('/').'/storage/'.$product['image'];
+            $links = array();
+            foreach (json_decode($product['images']) as $key => $image) {
+                $links[] = (new \TCG\Voyager\Voyager)->image($image);
+            }
+            $product['images'] = $links;
+        });
+
+        return $products;
     }
 
 }
