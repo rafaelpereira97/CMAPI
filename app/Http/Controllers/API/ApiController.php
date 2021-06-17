@@ -40,6 +40,16 @@ class ApiController extends Controller
 
     public function getProducts(){
         $products = Product::with('entity','subcategory')->get();
+        $products->map(function ($product){
+            $product['image'] = url('/').'/storage/'.$product['image'];
+            $links = array();
+            foreach (json_decode($product['images']) as $key => $image) {
+                $links[] = (new \TCG\Voyager\Voyager)->image($image);
+            }
+            $product['images'] = $links;
+        });
+
+
         return response()->json($products,200);
     }
 
