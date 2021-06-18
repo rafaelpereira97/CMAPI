@@ -34,11 +34,7 @@ class ApiController extends Controller
     }
 
     public function getProductsByNameAndSubcategory($searchString){
-        $products = Product::with(['entity','subcategory' => function($query)use($searchString){
-            $query->where('subcategories.name','like','%'.$searchString.'%');
-        }])
-            ->where('name', 'like', '%'.$searchString.'%')->get();
-
+        $products = Product::with('subcategory','entity')->where('products.name','like','%'.$searchString.'%')->get();
         return response()->json($this->mapProducts($products),200);
     }
 
